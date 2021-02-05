@@ -5,6 +5,8 @@ services:
     restart: always
     image: nginx
     container_name: nginx
+    environment:
+      - TZ=Zurich/Europe
     ports:
       - "80:80"
       - "443:443"
@@ -18,6 +20,8 @@ services:
     restart: always
     image: jwilder/docker-gen
     container_name: nginx-gen
+    environment:
+      - TZ=Zurich/Europe
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock:ro"
       - "./volumes/proxy/templates/nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro"
@@ -29,6 +33,8 @@ services:
     restart: always
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-nginx-proxy-companion
+    environment:
+      - TZ=Zurich/Europe
     volumes_from:
       - nginx
     volumes:
@@ -41,6 +47,8 @@ services:
     restart: always
     image: domsk/rustiny:latest
     container_name: rustiny
+    environment:
+      - TZ=Zurich/Europe
     environment:
       - VIRTUAL_HOST=alpha.kylogic.com
       - VIRTUAL_NETWORK=nginx-proxy
